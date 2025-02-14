@@ -36,21 +36,21 @@ Build a **simple 1-on-1 chat application** that allows users to **send and recei
 
 ## **Requirements:**
 
-- The app must have a **simple, clean, and user-friendly UI**.
-- The chat interface should be **responsive** and display messages clearly.
-- Messages should appear instantly using **Socket.io for real-time updates**.
-- When a user sends a message, **the recipient should receive it instantly**.
-- Show **previous messages between two users** when the page is refreshed.
+- [ ]  The app must have a **simple, clean, and user-friendly UI**.
+- [ ]  The chat interface should be **responsive** and display messages clearly.
+- [ ]  Messages should appear instantly using **Socket.io for real-time updates**.
+- [ ]  When a user sends a message, **the recipient should receive it instantly**.
+- [ ]  Show **previous messages between two users** when the page is refreshed.
 - Ensure **good UI/UX design**:
-  - Messages should be **easily readable** with distinct styling for sender & receiver.
-  - The chat input should be **intuitive to use**, with proper focus handling.
+  - [ ] Messages should be **easily readable** with distinct styling for sender & receiver.
+  - [ ] The chat input should be **intuitive to use**, with proper focus handling.
 
 ## **Optional Features (Bonus Points):**
 
-- Use **any styling approach** (Tailwind, MUI, Styled Components, etc.). Basic styling is recommended for readability.
-- Write **a couple of tests**—2 or 3 should be enough. No need for full test coverage.
-- **State Management (Optional, if needed):**
-  - Use **React Context, Zustand, or Redux Toolkit** if managing chat state becomes complex (e.g., handling active conversations, message caching).
+[] Use **any styling approach** (Tailwind, MUI, Styled Components, etc.). Basic styling is recommended for readability.
+[] Write **a couple of tests**—2 or 3 should be enough. No need for full test coverage.
+ **State Management (Optional, if needed):**
+  [] Use **React Context, Zustand, or Redux Toolkit** if managing chat state becomes complex (e.g., handling active conversations, message caching).
 
 ## **Server / API**
 
