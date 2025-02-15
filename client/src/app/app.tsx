@@ -1,11 +1,13 @@
-import NxWelcome from './nx-welcome';
+import { Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import NxWelcome from "./nx-welcome";
 
-export function App() {
+export default function App() {
   return (
-    <div>
-      <NxWelcome title="@nx-chat-assignment/client" />
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/welcome" element={<NxWelcome title="@nx-chat-assignment/client" />} />
+      <Route path="/login" element={<LoginPage />} />
+    </Routes>
   );
 }
-
-export default App;

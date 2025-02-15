@@ -49,7 +49,7 @@ Build a **simple 1-on-1 chat application** that allows users to **send and recei
 
 - [ ]  Use **any styling approach** (Tailwind, MUI, Styled Components, etc.). Basic styling is recommended for readability.
 - [ ]  Write **a couple of tests**—2 or 3 should be enough. No need for full test coverage.
- **State Management (Optional, if needed):**
+- **State Management (Optional, if needed):**
   - [ ]  Use **React Context, Zustand, or Redux Toolkit** if managing chat state becomes complex (e.g., handling active conversations, message caching).
 
 ## **Server / API**
