@@ -4,9 +4,10 @@ interface CommonButtonProps {
   text: string;
   onClick: () => void;
   disabled?: boolean;
+  loading?: boolean;
 }
 
-export default function CommonButton({ text, onClick, disabled = false }: CommonButtonProps) {
+export default function CommonButton({ text, onClick, disabled = false, loading }: CommonButtonProps) {
   return (
     <button
       onClick={onClick}
@@ -17,7 +18,7 @@ export default function CommonButton({ text, onClick, disabled = false }: Common
           : "bg-blue-600 text-white hover:bg-blue-700"
       }`}
     >
-      {text}
+      {loading ? <span className="loader"></span> : text}
     </button>
   );
 }

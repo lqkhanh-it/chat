@@ -4,13 +4,15 @@ interface CommonInputProps {
   type?: string;
   placeholder: string;
   value: string;
+  disabled?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function CommonInput({ type = "text", placeholder, value, onChange }: CommonInputProps) {
+export default function CommonInput({ type = "text", placeholder, value, onChange, disabled }: CommonInputProps) {
   return (
     <input
       type={type}
+      disabled={disabled}
       placeholder={placeholder}
       value={value}
       onChange={onChange}

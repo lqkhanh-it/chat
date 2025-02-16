@@ -1,30 +1,43 @@
-import React, { useState } from "react";
-import { create } from "zustand";
-import { User, ChatMessage } from "@nx-chat-assignment/shared-models";
-import ChatList from "./../components/ChatList";
-
-interface ChatStore {
-  messages: ChatMessage[];
-  sendMessage: (message: ChatMessage) => void;
-  onlineUsers: User[];
-}
-
-const useChatStore = create<ChatStore>((set) => ({
-  messages: [],
-  sendMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
-  onlineUsers: [],
-}));
+import React, { useState, useEffect } from 'react';
+import { User } from '@nx-chat-assignment/shared-models';
+import ChatList from '../components/ChatList';
+import useChatStore from '../hooks/useChatStore';
+import { useNavigate } from 'react-router-dom';
+import LogoutButton from '../components/LogoutButton';
 
 function ChatPage() {
+  const navigate = useNavigate();
   const [selectedUser, setSelectedUser] = useState<User>();
-  const { onlineUsers } = useChatStore();
+  const currentUser = useChatStore((state) => state.currentUser);
+  const { onlineUsers, loadOnlineUsers, fetchCurrentUser } = useChatStore();
+
+  useEffect(() => {
+    fetchCurrentUser();
+  }, [fetchCurrentUser]);
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('/login');
+    } else {
+      loadOnlineUsers();
+    }
+  }, [navigate, loadOnlineUsers, currentUser]);
 
   return (
     <div className="flex w-full h-screen">
-      <ChatList users={onlineUsers} onSelectUser={setSelectedUser} />
+      <div className="w-1/4">
+        {currentUser && (
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-bold">Logged in as {currentUser.username}</h2>
+            <LogoutButton />
+          </div>
+        )}
+
+        <ChatList users={onlineUsers} onSelectUser={setSelectedUser} />
+      </div>
       <div className="w-3/4 p-4 bg-gray-100">
         {selectedUser ? (
-          <h2 className="text-xl font-bold">Chat with {selectedUser?.username}</h2>
+          <h2 className="text-xl font-bold">Chat with {selectedUser.username}</h2>
         ) : (
           <h2 className="text-xl font-bold">Select a user to start chatting</h2>
         )}
