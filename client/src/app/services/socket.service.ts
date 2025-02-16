@@ -2,17 +2,24 @@ import { io, Socket } from 'socket.io-client';
 import { User } from '@nx-chat-assignment/shared-models';
 import { WS_URL } from '../constants/httpRequest';
 
-const socket: Socket = io(WS_URL);
+let socket: Socket = io(WS_URL);
 
 interface SocketService {
   login: (username: string) => Promise<User | null>;
   logout: () => void;
+  connect: () => void;
   listenForOnlineUsers: (callback: (users: User[]) => void) => void;
 }
 
 const socketService: SocketService = {
+  connect: () => {
+    if (!socket || !socket.connected ) {
+      socket = io(WS_URL);
+    }
+  },
   login: (username) =>
     new Promise((resolve, reject) => {
+      socketService.connect();
       socket.emit('user:login', username);
 
       socket.once('error', (error) => {
@@ -32,6 +39,7 @@ const socketService: SocketService = {
   },
 
   listenForOnlineUsers: (callback) => {
+    socketService.connect();
     socket.on('usersOnline', ({ data }) => {
       callback(data);
     });

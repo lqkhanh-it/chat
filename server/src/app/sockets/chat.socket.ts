@@ -11,6 +11,10 @@ export const ChatSocket = (io: Server) => {
     console.log(`✅ User connected: ${socket.id}`);
 
     socket.on('user:login', (username: string) => {
+      if (!username) {
+        socket.emit('error', { event: 'user:login', message: 'Username is required' });
+        return;
+      }
       const user = AuthService.login(username);
 
       if (!user) {

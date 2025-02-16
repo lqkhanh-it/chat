@@ -20,7 +20,6 @@ const useUser = create<UserStore>((set) => ({
   fetchCurrentUser: () => {
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
-      localStorage.setItem("currentUser", JSON.stringify(storedUser));
       set({ currentUser: JSON.parse(storedUser) });
     }
   },
@@ -29,6 +28,7 @@ const useUser = create<UserStore>((set) => ({
       const user = await socketService.login(username);
       if (user) {
         set({ currentUser: user });
+        localStorage.setItem("currentUser", JSON.stringify(user));
       }
     } catch (error) {
       console.error("Login failed:", error);
