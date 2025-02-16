@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { loginUser } from "../services/login.service";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import useChatStore from "../hooks/useChatStore";
+import useUser from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -11,7 +11,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [error, setError] = useState<string>("");
   const [loading , setLoading] = useState(false);
-  const {currentUser, fetchCurrentUser, setCurrentUser} = useChatStore();
+  const {currentUser, fetchCurrentUser, setCurrentUser} = useUser();
 
   const handleLogin = async () => {
     try {

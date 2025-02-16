@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { User } from '@nx-chat-assignment/shared-models';
 import ChatList from '../components/ChatList';
-import useChatStore from '../hooks/useChatStore';
+import useUser from '../hooks/useUser';
 import { useNavigate } from 'react-router-dom';
 import LogoutButton from '../components/LogoutButton';
+import ChatBox from '../components/ChatBox';
 
 function ChatPage() {
   const navigate = useNavigate();
-  const [selectedUser, setSelectedUser] = useState<User>();
-  const currentUser = useChatStore((state) => state.currentUser);
-  const { onlineUsers, loadOnlineUsers, fetchCurrentUser } = useChatStore();
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const currentUser = useUser((state) => state.currentUser);
+  const { onlineUsers, loadOnlineUsers, fetchCurrentUser } = useUser();
 
   useEffect(() => {
     fetchCurrentUser();
@@ -41,6 +42,7 @@ function ChatPage() {
         ) : (
           <h2 className="text-xl font-bold">Select a user to start chatting</h2>
         )}
+        <ChatBox selectedUser={selectedUser} />
       </div>
     </div>
   );

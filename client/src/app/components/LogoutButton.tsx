@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import useChatStore from "../hooks/useChatStore";
+import useUser from "../hooks/useUser";
 
 const LogoutButton = () => {
   const navigate = useNavigate();
-  const { setCurrentUser } = useChatStore();
+  const { setCurrentUser } = useUser();
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");

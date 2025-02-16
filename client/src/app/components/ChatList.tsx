@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { User } from "@nx-chat-assignment/shared-models";
-import useChatStore from "../hooks/useChatStore";
+import useUser from "../hooks/useUser";
 
 interface ChatListProps {
   users: User[];
@@ -8,7 +8,7 @@ interface ChatListProps {
 }
 
 const ChatList: React.FC<ChatListProps> = ({ users, onSelectUser }) => {
-  const currentUser = useChatStore((state) => state.currentUser);
+  const currentUser = useUser((state) => state.currentUser);
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) => user.id !== currentUser?.id);

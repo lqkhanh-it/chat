@@ -1,32 +1,35 @@
-import { ChatMessage, User } from '@nx-chat-assignment/shared-models';
+import { ChatMessage } from '@nx-chat-assignment/shared-models';
 import { create } from 'zustand';
-import { fetchOnlineUsers } from '../services/user.service';
+import { fetchChatHistory } from '../services/chat.service';
+import { io } from "socket.io-client";
+import { WS_URL } from '../constants/httpRequest';
+
+const socket = io(WS_URL);
 
 interface ChatStore {
   messages: ChatMessage[];
   sendMessage: (message: ChatMessage) => void;
-  onlineUsers: User[];
-  currentUser: User | null;
-  loadOnlineUsers: () => Promise<void>;
-  setCurrentUser: (user: User | null) => void;
-  fetchCurrentUser: () => void;
+  fetchMessages: (currentUserId: string, selectedUserId: string) => Promise<void>;
 }
 
 const useChatStore = create<ChatStore>((set) => ({
   messages: [],
-  sendMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
-  onlineUsers: [],
-  currentUser: null,
-  setCurrentUser: (user) => set({ currentUser: user }),
-  fetchCurrentUser: () => {
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-      set({ currentUser: JSON.parse(storedUser) });
-    }
+  sendMessage: (message) => {
+    socket.emit("send_message", message);
+    set((state) => ({ messages: [...state.messages, message] }));
   },
-  loadOnlineUsers: async () => {
-    const users = await fetchOnlineUsers();
-    set({ onlineUsers: users });
+  fetchMessages: async (currentUserId, selectedUserId) => {
+    const chatHistory = await fetchChatHistory(currentUserId, selectedUserId);
+    set({ messages: chatHistory });
   },
 }));
+
+socket.on("connect", () => {
+  console.log("Connected to server");
+})
+socket.on("receive_message", (message: ChatMessage) => {
+  console.log("Received message:", message);
+  useChatStore.setState((state) => ({ messages: [...state.messages, message] }));
+});
+
 export default useChatStore;
