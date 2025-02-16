@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { create } from "zustand";
 import { User, ChatMessage } from "@nx-chat-assignment/shared-models";
-import ChatList from "./ChatList";
+import ChatList from "./../components/ChatList";
 
 interface ChatStore {
   messages: ChatMessage[];
