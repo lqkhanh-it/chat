@@ -1,10 +1,7 @@
 import { ChatMessage } from '@nx-chat-assignment/shared-models';
 import { create } from 'zustand';
 import { fetchChatHistory } from '../services/chat.service';
-import { io } from "socket.io-client";
-import { WS_URL } from '../constants/httpRequest';
-
-const socket = io(WS_URL);
+import { socketService } from '../services/socket.service';
 
 interface ChatStore {
   messages: ChatMessage[];
@@ -24,10 +21,7 @@ const useChatStore = create<ChatStore>((set) => ({
   },
 }));
 
-socket.on("connect", () => {
-  console.log("Connected to server");
-})
-socket.on("receive_message", (message: ChatMessage) => {
+socketService.onReceiveMessage((message) => {
   console.log("Received message:", message);
   useChatStore.setState((state) => ({ messages: [...state.messages, message] }));
 });

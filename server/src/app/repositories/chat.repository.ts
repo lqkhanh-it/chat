@@ -39,7 +39,14 @@ export const ChatRepository = {
   },
 
   removeUser: (userId: string) => {
-    onlineUsers = onlineUsers.filter((user) => user.id !== userId);
+    onlineUsers = onlineUsers.map((user) => {
+      if (user.id == userId) {
+        user.online = false
+      }
+
+      return user
+    })
+    // onlineUsers = onlineUsers.filter((user) => user.id !== userId);
     return onlineUsers;
   },
 

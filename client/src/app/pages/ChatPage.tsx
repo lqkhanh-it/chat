@@ -10,7 +10,7 @@ function ChatPage() {
   const navigate = useNavigate();
   const currentUser = useUser((state) => state.currentUser);
   const selectedUser = useUser((state) => state.selectedUser);
-  const { onlineUsers, fetchCurrentUser, setSelectedUser } = useUser();
+  const { fetchCurrentUser, setSelectedUser } = useUser();
 
   useEffect(() => {
     fetchCurrentUser();
@@ -33,7 +33,7 @@ function ChatPage() {
             </div>
           )}
 
-          <ChatList users={onlineUsers} onSelectUser={setSelectedUser} />
+          <ChatList onSelectUser={setSelectedUser} />
         </div>
         <div className="w-3/4 p-4 bg-gray-100">
           {selectedUser ? (

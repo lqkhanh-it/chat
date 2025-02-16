@@ -47,6 +47,7 @@ const useUser = create<UserStore>((set) => ({
 }));
 
 socketService.listenForOnlineUsers((users) => {
+  console.log("Online User Listening...")
   useUser.setState({ onlineUsers: users });
 });
 

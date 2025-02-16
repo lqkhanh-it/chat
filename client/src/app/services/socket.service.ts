@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client';
-import { User } from '@nx-chat-assignment/shared-models';
+import { ChatMessage, User } from '@nx-chat-assignment/shared-models';
 import { WS_URL } from '../constants/httpRequest';
 
 let socket: Socket = io(WS_URL);
@@ -10,6 +10,7 @@ interface SocketService {
   connect: () => void;
   listenForOnlineUsers: (callback: (users: User[]) => void) => void;
   onError: (callback: (error: string) => void) => void;
+  onReceiveMessage: (callback: (message: ChatMessage) => void) => void;
 }
 
 const socketService: SocketService = {
@@ -43,6 +44,12 @@ const socketService: SocketService = {
     socketService.connect();
     socket.on('usersOnline', ({ data }) => {
       callback(data);
+    });
+  },
+
+  onReceiveMessage: (callback) => {
+    socket.on("receive_message", (message: ChatMessage) => {
+      callback(message);
     });
   },
   onError: (callback) => {

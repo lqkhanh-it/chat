@@ -7,13 +7,14 @@ interface ChatListProps {
   onSelectUser: (user: User) => void;
 }
 
-const ChatList: React.FC<ChatListProps> = ({ users, onSelectUser }) => {
+const ChatList: React.FC<ChatListProps> = ({ onSelectUser }) => {
   const selectedUser = useUser((state) => state.selectedUser);
   const currentUser = useUser((state) => state.currentUser);
+  const onlineUsers = useUser(state => state.onlineUsers)
 
   const filteredUsers = useMemo(() => {
-    return users.filter((user) => user.id !== currentUser?.id);
-  }, [users, currentUser]);
+    return onlineUsers.filter((user) => user.id !== currentUser?.id);
+  }, [onlineUsers, currentUser]);
 
   return (
     <div className="w-full p-4 bg-white shadow-md">
