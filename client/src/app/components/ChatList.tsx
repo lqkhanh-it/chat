@@ -8,6 +8,7 @@ interface ChatListProps {
 }
 
 const ChatList: React.FC<ChatListProps> = ({ users, onSelectUser }) => {
+  const selectedUser = useUser((state) => state.selectedUser);
   const currentUser = useUser((state) => state.currentUser);
 
   const filteredUsers = useMemo(() => {
@@ -22,7 +23,11 @@ const ChatList: React.FC<ChatListProps> = ({ users, onSelectUser }) => {
           filteredUsers.map((user) => (
             <li
               key={user.id}
-              className="p-2 border-b cursor-pointer hover:bg-gray-100"
+              className={`p-2 border-b cursor-pointer ${
+                user.id === selectedUser?.id
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  :  "hover:bg-gray-100"
+              }`}
               onClick={() => onSelectUser(user)}
             >
               {user.username}

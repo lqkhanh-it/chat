@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { loginUser } from "../services/login.service";
+import  { useEffect, useState } from "react";
 import Button from "../components/atoms/Button";
 import Input from "../components/atoms/Input";
 import useUser from "../hooks/useUser";
@@ -11,16 +10,14 @@ function Login() {
   const [username, setUsername] = useState("");
   const [error, setError] = useState<string>("");
   const [loading , setLoading] = useState(false);
-  const {currentUser, fetchCurrentUser, setCurrentUser} = useUser();
+  const {currentUser, fetchCurrentUser, login} = useUser();
 
   const handleLogin = async () => {
     try {
       setError("");
       setLoading(true);
       const name = username.trim();
-      const user = await loginUser(name);
-      localStorage.setItem("currentUser", JSON.stringify(user));
-      setCurrentUser(user);
+      login(name);
     } catch (error) {
       const message = (error as Error).message;
       setError(message);

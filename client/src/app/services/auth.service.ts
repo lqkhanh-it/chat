@@ -28,14 +28,14 @@ export const loginUser = async (username: string): Promise<User> => {
   }
 };
 
-export const Logout = async (userid: string): Promise<string> => {
+export const logout = async (userId: string): Promise<string> => {
   try {
     const response = await fetch(API_URL + "/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userid }),
+      body: JSON.stringify({ userId }),
     });
 
     if (!response.ok) {

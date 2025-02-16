@@ -1,13 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import useUser from "../../hooks/useUser";
+import useNotification from "../../hooks/useNotification";
 
 const LogoutButton = () => {
   const navigate = useNavigate();
-  const { setCurrentUser } = useUser();
+  const { currentUser, logout } = useUser();
+  const { addNotification } = useNotification();
+
 
   const handleLogout = () => {
-    localStorage.removeItem("currentUser");
-    setCurrentUser(null);
+    if (!currentUser) {
+      addNotification("You are not logged in.");
+      return;
+    };
+    logout()
     navigate('/login');
   };
 

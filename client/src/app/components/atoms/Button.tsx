@@ -1,5 +1,3 @@
-import React from "react";
-
 interface CommonButtonProps {
   text: string;
   onClick: () => void;
