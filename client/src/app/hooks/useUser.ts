@@ -6,6 +6,8 @@ interface UserStore {
   onlineUsers: User[];
   currentUser: User | null;
   selectedUser: User | null;
+  error: string | null;
+
   setSelectedUser: (user: User) => void;
   fetchCurrentUser: () => void;
   login: (username: string) => Promise<void>;
@@ -16,6 +18,8 @@ const useUser = create<UserStore>((set) => ({
   onlineUsers: [],
   currentUser: null,
   selectedUser: null,
+  error: null,
+
   setSelectedUser: (user) => set({ selectedUser: user }),
   fetchCurrentUser: () => {
     const storedUser = localStorage.getItem('currentUser');
@@ -31,13 +35,14 @@ const useUser = create<UserStore>((set) => ({
         localStorage.setItem("currentUser", JSON.stringify(user));
       }
     } catch (error) {
+      set({ error: error?.message });
       console.error("Login failed:", error);
     }
   },
   logout: () => {
     socketService.logout();
     localStorage.removeItem("currentUser");
-    set({ currentUser: null });
+    set({ currentUser: null, error: null });
   },
 }));
 

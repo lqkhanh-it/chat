@@ -8,19 +8,14 @@ function Login() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
-  const [error, setError] = useState<string>("");
   const [loading , setLoading] = useState(false);
-  const {currentUser, fetchCurrentUser, login} = useUser();
+  const {currentUser, fetchCurrentUser, login, error} = useUser();
 
   const handleLogin = async () => {
     try {
-      setError("");
       setLoading(true);
       const name = username.trim();
       login(name);
-    } catch (error) {
-      const message = (error as Error).message;
-      setError(message);
     } finally {
       setLoading(false);
     }

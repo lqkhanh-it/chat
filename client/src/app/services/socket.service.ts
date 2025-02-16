@@ -9,6 +9,7 @@ interface SocketService {
   logout: () => void;
   connect: () => void;
   listenForOnlineUsers: (callback: (users: User[]) => void) => void;
+  onError: (callback: (error: string) => void) => void;
 }
 
 const socketService: SocketService = {
@@ -42,6 +43,19 @@ const socketService: SocketService = {
     socketService.connect();
     socket.on('usersOnline', ({ data }) => {
       callback(data);
+    });
+  },
+  onError: (callback) => {
+    socket.on("connect_error", (err) => {
+      callback(`Connection error: ${err.message}`);
+    });
+
+    socket.on("disconnect", (reason) => {
+      callback(`Disconnected: ${reason}`);
+    });
+
+    socket.on("error", (error) => {
+      callback(`Socket error: ${error.message || "Unknown error"}`);
     });
   },
 };
