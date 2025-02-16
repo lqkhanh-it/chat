@@ -3,7 +3,7 @@ import { User } from '@nx-chat-assignment/shared-models';
 import ChatList from '../components/ChatList';
 import useUser from '../hooks/useUser';
 import { useNavigate } from 'react-router-dom';
-import LogoutButton from '../components/LogoutButton';
+import LogoutButton from '../components/atoms/LogoutButton';
 import ChatBox from '../components/ChatBox';
 
 function ChatPage() {
