@@ -14,17 +14,21 @@ interface UserStore {
   logout: () => void;
 }
 
-const useUser = create<UserStore>((set) => ({
+const useUser = create<UserStore>((set, get) => ({
+  error: null,
   onlineUsers: [],
   currentUser: null,
   selectedUser: null,
-  error: null,
 
   setSelectedUser: (user) => set({ selectedUser: user }),
   fetchCurrentUser: () => {
+    if  (get().currentUser) return
+
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
-      set({ currentUser: JSON.parse(storedUser) });
+      const temp = JSON.parse(storedUser)
+      get().login(temp?.username);
+      set({ currentUser: temp });
     }
   },
   login: async (username: string) => {
@@ -45,10 +49,5 @@ const useUser = create<UserStore>((set) => ({
     set({ currentUser: null, error: null });
   },
 }));
-
-socketService.listenForOnlineUsers((users) => {
-  console.log("Online User Listening...")
-  useUser.setState({ onlineUsers: users });
-});
 
 export default useUser;

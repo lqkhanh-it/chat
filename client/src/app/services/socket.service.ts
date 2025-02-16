@@ -1,6 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 import { ChatMessage, User } from '@nx-chat-assignment/shared-models';
 import { WS_URL } from '../constants/httpRequest';
+import useUser from '../hooks/useUser';
 
 let socket: Socket = io(WS_URL);
 
@@ -18,6 +19,7 @@ const socketService: SocketService = {
     if (!socket || !socket.connected ) {
       socket = io(WS_URL);
     }
+    console.log("Socket connected");
   },
   login: (username) =>
     new Promise((resolve, reject) => {
@@ -66,5 +68,10 @@ const socketService: SocketService = {
     });
   },
 };
+
+socketService.listenForOnlineUsers((users) => {
+  console.log("Online User Listening...")
+  useUser.setState({ onlineUsers: users });
+});
 
 export { socket, socketService };

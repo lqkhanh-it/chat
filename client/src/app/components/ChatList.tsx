@@ -3,7 +3,6 @@ import { User } from "@nx-chat-assignment/shared-models";
 import useUser from "../hooks/useUser";
 
 interface ChatListProps {
-  users: User[];
   onSelectUser: (user: User) => void;
 }
 
