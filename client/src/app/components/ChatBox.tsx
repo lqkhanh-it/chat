@@ -39,6 +39,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
     }
   };
 
+  useEffect(() => {
+    if (messages) {
+      const test = messages.filter((msg) => msg.sender.id === currentUser?.id);
+      console.log(test);
+    }
+  }, [messages, currentUser]);
+
   return (
     <div className="flex flex-col w-full h-full p-4 bg-white shadow-lg rounded-lg">
       <div className="flex items-center justify-between p-2 border-b">

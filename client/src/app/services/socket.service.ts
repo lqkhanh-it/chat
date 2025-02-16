@@ -2,13 +2,20 @@ import { io, Socket } from 'socket.io-client';
 import { ChatMessage, User } from '@nx-chat-assignment/shared-models';
 import { WS_URL } from '../constants/httpRequest';
 import useUser from '../hooks/useUser';
+import useChatStore from '../hooks/useChatStore';
 
 let socket: Socket = io(WS_URL);
+
+export type SendMessagePayload = {
+  receiver: Omit<User, "online">;
+  message: string;
+}
 
 interface SocketService {
   login: (username: string) => Promise<User | null>;
   logout: () => void;
   connect: () => void;
+  sendMessage: (message: ChatMessage) => void;
   listenForOnlineUsers: (callback: (users: User[]) => void) => void;
   onError: (callback: (error: string) => void) => void;
   onReceiveMessage: (callback: (message: ChatMessage) => void) => void;
@@ -16,10 +23,10 @@ interface SocketService {
 
 const socketService: SocketService = {
   connect: () => {
-    if (!socket || !socket.connected ) {
+    if (!socket || !socket.connected) {
       socket = io(WS_URL);
     }
-    console.log("Socket connected");
+    console.log('Socket connected');
   },
   login: (username) =>
     new Promise((resolve, reject) => {
@@ -42,6 +49,17 @@ const socketService: SocketService = {
     socket.disconnect();
   },
 
+  sendMessage: (message) => {
+    socketService.connect();
+
+    const payload: SendMessagePayload = {
+      receiver: message.receiver,
+      message: message.message
+    };
+
+    socket.emit('message:send', payload);
+  },
+
   listenForOnlineUsers: (callback) => {
     socketService.connect();
     socket.on('usersOnline', ({ data }) => {
@@ -50,28 +68,33 @@ const socketService: SocketService = {
   },
 
   onReceiveMessage: (callback) => {
-    socket.on("receive_message", (message: ChatMessage) => {
+    socket.on('receive_message', (message: ChatMessage) => {
       callback(message);
     });
   },
   onError: (callback) => {
-    socket.on("connect_error", (err) => {
+    socket.on('connect_error', (err) => {
       callback(`Connection error: ${err.message}`);
     });
 
-    socket.on("disconnect", (reason) => {
+    socket.on('disconnect', (reason) => {
       callback(`Disconnected: ${reason}`);
     });
 
-    socket.on("error", (error) => {
-      callback(`Socket error: ${error.message || "Unknown error"}`);
+    socket.on('error', (error) => {
+      callback(`Socket error: ${error.message || 'Unknown error'}`);
     });
   },
 };
 
 socketService.listenForOnlineUsers((users) => {
-  console.log("Online User Listening...")
+  console.log('Online User Listening...');
   useUser.setState({ onlineUsers: users });
+});
+
+socketService.onReceiveMessage((message) => {
+  console.log("Received message:", message);
+  useChatStore.setState((state) => ({ messages: [...state.messages, message] }));
 });
 
 export { socket, socketService };

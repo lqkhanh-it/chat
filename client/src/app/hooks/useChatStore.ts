@@ -12,7 +12,7 @@ interface ChatStore {
 const useChatStore = create<ChatStore>((set) => ({
   messages: [],
   sendMessage: (message) => {
-    socket.emit("send_message", message);
+    socketService.sendMessage(message);
     set((state) => ({ messages: [...state.messages, message] }));
   },
   fetchMessages: async (currentUserId, selectedUserId) => {
@@ -20,10 +20,5 @@ const useChatStore = create<ChatStore>((set) => ({
     set({ messages: chatHistory });
   },
 }));
-
-socketService.onReceiveMessage((message) => {
-  console.log("Received message:", message);
-  useChatStore.setState((state) => ({ messages: [...state.messages, message] }));
-});
 
 export default useChatStore;
