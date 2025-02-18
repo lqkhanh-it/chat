@@ -7,8 +7,6 @@ import { ChatSocket } from './app/sockets/chat.socket';
 
 require('dotenv').config();
 
-import "./app/db/redisClient";
-
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { origin: '*' } });
