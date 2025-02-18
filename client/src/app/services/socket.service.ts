@@ -18,7 +18,7 @@ interface SocketService {
   sendMessage: (message: ChatMessage) => void;
   listenForOnlineUsers: (callback: (users: User[]) => void) => void;
   onError: (callback: (error: string) => void) => void;
-  onReceiveMessage: (callback: (message: ChatMessage) => void) => void;
+  onReceiveMessage: () => void;
 }
 
 const socketService: SocketService = {
@@ -66,11 +66,9 @@ const socketService: SocketService = {
     });
   },
 
-  onReceiveMessage: (callback) => {
-    socketService.connect();
+  onReceiveMessage: () => {
     socket.on('message:receive', ({data}) => {
-      console.log("Received:", data);
-      callback(data);
+      useChatStore.setState((state) => ({ messages: [...state.messages, data] }));
     });
   },
   onError: (callback) => {
@@ -93,9 +91,8 @@ socketService.listenForOnlineUsers((users) => {
   useUser.setState({ onlineUsers: users });
 });
 
-socketService.onReceiveMessage((message) => {
-  console.log('Message Received...');
-  useChatStore.setState((state) => ({ messages: [...state.messages, message] }));
+socket.on('message:receive', ({data}) => {
+  useChatStore.setState((state) => ({ messages: [...state.messages, data] }));
 });
 
 export { socket, socketService };
