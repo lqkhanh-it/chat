@@ -26,7 +26,6 @@ const socketService: SocketService = {
     if (!socket || !socket.connected) {
       socket = io(WS_URL);
     }
-    console.log('Socket connected');
   },
   login: (username) =>
     new Promise((resolve, reject) => {
@@ -68,8 +67,10 @@ const socketService: SocketService = {
   },
 
   onReceiveMessage: (callback) => {
-    socket.on('receive_message', (message: ChatMessage) => {
-      callback(message);
+    socketService.connect();
+    socket.on('message:receive', ({data}) => {
+      console.log("Received:", data);
+      callback(data);
     });
   },
   onError: (callback) => {
@@ -93,7 +94,7 @@ socketService.listenForOnlineUsers((users) => {
 });
 
 socketService.onReceiveMessage((message) => {
-  console.log("Received message:", message);
+  console.log('Message Received...');
   useChatStore.setState((state) => ({ messages: [...state.messages, message] }));
 });
 

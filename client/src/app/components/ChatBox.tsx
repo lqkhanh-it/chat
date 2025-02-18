@@ -41,8 +41,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
 
   useEffect(() => {
     if (messages) {
-      const test = messages.filter((msg) => msg.sender.id === currentUser?.id);
-      console.log(test);
+      // const test = messages.filter((msg) => msg.sender.id === currentUser?.id);
+      console.log(messages);
     }
   }, [messages, currentUser]);
 
