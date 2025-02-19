@@ -1,3 +1,4 @@
+// @ts-ignore
 import { User } from '@nx-chat-assignment/shared-models';
 import { Server, Socket } from 'socket.io';
 import { AuthService } from '../services/auth.service';

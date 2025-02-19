@@ -1,3 +1,4 @@
+// @ts-ignore
 import { ChatHistory, ChatMessage, OnlineUsers, User } from '@nx-chat-assignment/shared-models';
 import { v4 as uuidv4 } from 'uuid';
 

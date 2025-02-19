@@ -1,3 +1,4 @@
+// @ts-ignore
 import { User, ChatMessage } from '@nx-chat-assignment/shared-models';
 import { ChatRepository } from '../repositories/chat.repository';
 

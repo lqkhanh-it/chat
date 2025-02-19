@@ -1,10 +1,40 @@
 {
   "name": "server",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "server/src",
   "projectType": "application",
-  "tags": [],
+  "sourceRoot": "server/src",
   "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "server/dist",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "server/src/main.ts",
+        "tsConfig": "server/tsconfig.app.json",
+        "assets": ["server/src/assets"],
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
@@ -21,6 +51,11 @@
           "buildTarget": "server:build:production"
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f server/Dockerfile . -t server"
     }
-  }
+  },
+  "tags": []
 }

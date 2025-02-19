@@ -1,11 +1,14 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../dist/out-tsc",
-    "module": "NodeNext",
-    "types": ["node", "express"]
+    "skipLibCheck": true,
+    "outDir": "out-tsc/server",
+    "types": ["node"],
+    "rootDir": "src",
+    "tsBuildInfoFile": "out-tsc/server/tsconfig.app.tsbuildinfo"
   },
   "include": ["src/**/*.ts"],
+  "exclude": [],
   "references": [
     {
       "path": "../shared-models/tsconfig.lib.json"
