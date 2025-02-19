@@ -38,3 +38,6 @@ USER server
 
 # Start the application
 CMD ["node", "server/main.js"]
+
+#   docker login
+#   docker push lequockhanh292/chat-sv:v1 (name of image must same with name of repository)
