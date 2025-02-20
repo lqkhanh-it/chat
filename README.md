@@ -1,3 +1,17 @@
+# For candidates
+
+
+**[Chat Assignment](https://github.com/lqkhanh-it/chat)**
+
+**[Frontend](https://freezechat.netlify.app/login)**
+
+**[Backend](https://chat-sv-v1.onrender.com)**
+
+**[Docker Hub](https://hub.docker.com/r/lequockhanh292/chat-sv)**
+
+**[Frontend log on Netlify](https://app.netlify.com/sites/freezechat/deploys/67b680f67eb67a4f4b465adb)**
+
+
 # Chat Assignment
 
 1. **Clone the Repository**
@@ -36,21 +50,21 @@ Build a **simple 1-on-1 chat application** that allows users to **send and recei
 
 ## **Requirements:**
 
-- [ ]  The app must have a **simple, clean, and user-friendly UI**.
-- [ ]  The chat interface should be **responsive** and display messages clearly.
-- [ ]  Messages should appear instantly using **Socket.io for real-time updates**.
-- [ ]  When a user sends a message, **the recipient should receive it instantly**.
-- [ ]  Show **previous messages between two users** when the page is refreshed.
+- [x]  The app must have a **simple, clean, and user-friendly UI**.
+- [x]  The chat interface should be **responsive** and display messages clearly.
+- [x]  Messages should appear instantly using **Socket.io for real-time updates**.
+- [x]  When a user sends a message, **the recipient should receive it instantly**.
+- [x]  Show **previous messages between two users** when the page is refreshed.
 - Ensure **good UI/UX design**:
-  - [ ] Messages should be **easily readable** with distinct styling for sender & receiver.
-  - [ ] The chat input should be **intuitive to use**, with proper focus handling.
+  - [x]  Messages should be **easily readable** with distinct styling for sender & receiver.
+  - [ ]  The chat input should be **intuitive to use**, with proper focus handling.
 
 ## **Optional Features (Bonus Points):**
 
-- [ ]  Use **any styling approach** (Tailwind, MUI, Styled Components, etc.). Basic styling is recommended for readability.
+- [x]  Use **any styling approach** (Tailwind, MUI, Styled Components, etc.). Basic styling is recommended for readability. - **Tailwind**
 - [ ]  Write **a couple of tests**—2 or 3 should be enough. No need for full test coverage.
 - **State Management (Optional, if needed):**
-  - [ ]  Use **React Context, Zustand, or Redux Toolkit** if managing chat state becomes complex (e.g., handling active conversations, message caching).
+  - [x]  Use **React Context, Zustand, or Redux Toolkit** if managing chat state becomes complex (e.g., handling active conversations, message caching). - **Zustand**
 
 ## **Server / API**
 
