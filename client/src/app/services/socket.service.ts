@@ -92,6 +92,8 @@ socketService.listenForOnlineUsers((users) => {
 });
 
 socket.on('message:receive', ({data}) => {
+  const currentUser = useUser((state) => state.currentUser);
+  if (data.sender.id === currentUser?.id) return;
   useChatStore.setState((state) => ({ messages: [...state.messages, data] }));
 });
 
