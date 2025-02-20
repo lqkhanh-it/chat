@@ -1,6 +1,6 @@
-import {  User } from '@nx-chat-assignment/shared-models';
-import { create } from 'zustand';
-import { socketService } from '../services/socket.service';
+import { User } from "@nx-chat-assignment/shared-models";
+import { create } from "zustand";
+import { socketService } from "../services/socket.service";
 
 interface UserStore {
   onlineUsers: User[];
@@ -20,33 +20,40 @@ const useUser = create<UserStore>((set, get) => ({
   currentUser: null,
   selectedUser: null,
 
-  setSelectedUser: (user) => set({ selectedUser: user }),
-  fetchCurrentUser: () => {
-    if  (get().currentUser) return
+  setSelectedUser: (user) => {
+    set({ selectedUser: user });
+  },
 
-    const storedUser = localStorage.getItem('currentUser');
+  fetchCurrentUser: () => {
+    if (get().currentUser) return;
+
+    const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
-      const temp = JSON.parse(storedUser)
-      get().login(temp?.username);
-      set({ currentUser: temp });
+      const user = JSON.parse(storedUser);
+      get().login(user?.username);
+      set({ currentUser: user });
     }
   },
+
   login: async (username: string) => {
     try {
+      set({ error: null }); // Reset error state before attempting login
+
       const user = await socketService.login(username);
       if (user) {
         set({ currentUser: user });
         localStorage.setItem("currentUser", JSON.stringify(user));
       }
     } catch (error) {
-      set({ error: error?.message });
+      set({ error: error?.message || "Login failed" });
       console.error("Login failed:", error);
     }
   },
+
   logout: () => {
     socketService.logout();
     localStorage.removeItem("currentUser");
-    set({ currentUser: null, error: null });
+    set({ currentUser: null, selectedUser: null, error: null });
   },
 }));
 
