@@ -2,7 +2,7 @@ import { Loader2 } from "lucide-react";
 
 interface CommonButtonProps {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   loading?: boolean;
 }
@@ -10,6 +10,7 @@ interface CommonButtonProps {
 export default function CommonButton({ text, onClick, disabled = false, loading }: CommonButtonProps) {
   return (
     <button
+    type="submit"
     className={`mt-4 w-full py-3 px-6 text-white font-semibold rounded-lg 
     transition duration-300 ease-in-out 
     flex justify-center items-center

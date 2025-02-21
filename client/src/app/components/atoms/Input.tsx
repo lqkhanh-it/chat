@@ -15,6 +15,8 @@ export default function CommonInput({ type = "text", placeholder, value, onChang
       disabled={disabled}
       placeholder={placeholder}
       value={value}
+      autoComplete="on"
+      autoFocus
       onChange={onChange}
       className="w-full p-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
     />

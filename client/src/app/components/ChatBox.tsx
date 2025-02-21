@@ -76,6 +76,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
           className="flex-1 p-2 border rounded-xl bg-gray-100 focus:outline-none"
           placeholder="Type a message..."
           value={message}
+          autoFocus
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
         />
